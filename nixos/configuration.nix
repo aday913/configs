@@ -73,7 +73,7 @@
   nixpkgs.config.allowUnfree = true;
 
   fonts.fonts = with pkgs; [
-    jetbrains-mono
+    nerdfonts
   ];
 
   ##### FILL THIS OUT #####
@@ -126,6 +126,9 @@
     gvfs
     zsh
     python3
+    go
+    gcc
+    libgcc
     docker
     grimblast
     htop
@@ -143,6 +146,9 @@
     zsh-completions
     zsh-powerlevel10k
     zsh-syntax-highlighting
+    nerdfonts
+    ripgrep
+    lazygit
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

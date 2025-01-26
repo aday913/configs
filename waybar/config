@@ -1,0 +1,40 @@
+{
+	"layer": "top",
+	"position": "top",
+	"height": 30,
+	"spacing": 4,
+	"margin": 10,
+
+	"modules-left": ["hyprland/workspaces"],
+	"modules-center": ["clock"],
+	"modules-right": ["network", "cpu", "memory", "battery", "tray"],
+
+	"hyprland/workspaces": {
+		"format": "{name}",
+		"on-click": "activate"
+	},
+
+	"clock": {
+		"format": "{:%I: %M %p}"
+	},
+
+	"network": {
+		"format-wifi": "WiFi {signalStrength}%",
+		"format-ethernet": "ETH",
+		"format-disconnected": "Disconnected"
+	},
+
+	"cpu": {
+		"format": "CPU {usage}%"
+	},
+
+	"memory": {
+		"format": "MEM {used}/{total}, {percentage}%"
+	},
+
+	"disk": {
+		"format": "DISK {percentage_used}%",
+		"interval": 30,
+		"path": "/"
+	}
+}

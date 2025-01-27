@@ -5,18 +5,39 @@
 	"spacing": 4,
 	"margin": 10,
 
-	"modules-left": ["hyprland/workspaces"],
+	"modules-left": ["hyprland/workspaces", "custom/spotify"],
 	"modules-center": ["clock"],
-	"modules-right": ["network", "cpu", "memory", "battery", "tray"],
+	"modules-right": ["backlight/slider", "network", "cpu", "memory", "battery", "tray"],
 
 	"hyprland/workspaces": {
 		"format": "{name}",
 		"on-click": "activate"
 	},
 
-	"clock": {
-		"format": "{:%I: %M %p}"
-	},
+  "clock": {
+    "format": "{:%I: %M %p}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode"          : "year",
+      "mode-mon-col"  : 3,
+      "weeks-pos"     : "right",
+      "on-scroll"     : 1,
+      "format": {
+        "months":     "<span color='#ffead3'><b>{}</b></span>",
+        "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+        "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                }
+              },
+    "actions":  {
+        "on-click-right": "mode",
+        "on-scroll-up": "tz_up",
+        "on-scroll-down": "tz_down",
+        "on-scroll-up": "shift_up",
+        "on-scroll-down": "shift_down"
+        }
+  },
 
 	"network": {
 		"format-wifi": "WiFi {signalStrength}%",
@@ -29,12 +50,31 @@
 	},
 
 	"memory": {
-		"format": "MEM {used}/{total}, {percentage}%"
+		"format": "MEM {percentage}%"
 	},
 
 	"disk": {
 		"format": "DISK {percentage_used}%",
 		"interval": 30,
 		"path": "/"
-	}
-}
+	},
+
+  "backlight/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  },
+
+  "custom/spotify": {
+    "format": "{icon} {}",
+    "escape": true,
+    "return-type": "json",
+    "max-length": 40,
+    "interval": 30, // Remove this if your script is endless and write in loop
+    "on-click": "playerctl -p spotify play-pause",
+    "on-click-right": "killall spotify",
+    "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+    "on-scroll-up" : "playerctl -p spotify next",
+    "on-scroll-down" : "playerctl -p spotify previous",
+    "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
+    "exec-if": "pgrep spotify"

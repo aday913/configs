@@ -27,6 +27,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Enable docker
+  virtualisation.docker.enable = true;
+
   # Enable bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
@@ -65,7 +68,7 @@
     isNormalUser = true;
     description = "";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "video" "audio"];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
     packages = with pkgs; [];
   };
 
@@ -107,48 +110,81 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    # Web Browsers
     firefox
     google-chrome
+
+    # Useful terminal applications
+    vim     			# Basic text editor to fall back on
     wget
     git
-    neovim
+    yazi			# TUI file browser
+    zsh				# Shell
+    zsh-completions
+    zsh-powerlevel10k
+    zsh-syntax-highlighting
+    htop			# Process manager
+    neofetch
+    nitch			# Basically neofetch
+    tree
+    p7zip			# 7zip
+    ripgrep
+    lazygit			# TUI git manager
+    unzip
+    grimblast			# Screenshot tool
+    wl-clipboard
+    fzf				# Fuzzy finder
+    fd				# Find
+    spotify-player
+
+    # Terminal
     alacritty
-    waybar
-    rofi-wayland
-    hyprland
-    yazi
+    alacritty-theme
+
+    # Desktop
+    waybar			# Status bar
+    rofi-wayland		# Application launcher
+    hyprland			# Tiling window manager
+    hyprsunset			# Blue light filter
+    hyprlock			# Lock screen
+    hyprpaper			# Wallpaper manager
+    nwg-dock-hyprland		# Hyprland dock
+    ffmpegthumbnailer
+    brightnessctl		# Handle laptop screen brightness
+
+    # GUI file browser
     xfce.thunar
     xfce.thunar-archive-plugin
     xfce.thunar-volman
     xfce.tumbler
-    ffmpegthumbnailer
-    gvfs
-    zsh
+
+    # Desktop applications
+    spotify
+    vscode
+    vesktop			# Discord application
+    zathura			# PDF reader
+    dolphin-emu			# Emulator
+    obsidian			# Note taking application
+    obs-studio			# Screen capture tool
+    vlc				# Media tool
+
+
+    # Programming/Dev tools
+    neovim
     python3
     go
+    rustup
+    nodejs_23
     gcc
     libgcc
     docker
-    grimblast
-    htop
-    vesktop
-    spotify
-    hyprlock
-    nwg-dock-hyprland
-    zathura
-    nitch
-    dolphin-emu
-    unzip
-    brightnessctl
-    tree
-    zsh
-    zsh-completions
-    zsh-powerlevel10k
-    zsh-syntax-highlighting
+    docker-compose
+
+    # Fonts
     nerdfonts
-    ripgrep
-    lazygit
+
+    # Misc
+    lxappearance		# GTK themes and icons
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

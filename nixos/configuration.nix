@@ -16,8 +16,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  ##### FILL THIS OUT #####
-  networking.hostName = "INSERT_HOSTNAME_HERE"; # Define your hostname.
+  ###### FILL OUT HERE
+  networking.hostName = ""; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -36,8 +36,7 @@
   services.blueman.enable = true;
 
   # Set your time zone.
-  ##### FILL THIS OUT #####
-  time.timeZone = "TIMEZONE HERE";
+  time.timeZone = "America/Phoenix";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -61,12 +60,9 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-
-  ##### FILL THIS OUT #####
-
-  users.users.NAME_HERE= {
+  users.users.example = { # FILL THIS OUT
     isNormalUser = true;
-    description = "";
+    description = ""; # FILL THIS OUT
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
     packages = with pkgs; [];
@@ -75,12 +71,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     nerdfonts
   ];
 
-  ##### FILL THIS OUT #####
-  services.getty.autologinUser = "USERNAME";
+  services.getty.autologinUser = ""; # FILL THIS OUT
 
   services.gvfs.enable = true;
 
@@ -90,14 +85,25 @@
     enable = true;
     plugins = with pkgs.xfce; [
     	thunar-archive-plugin
-	thunar-volman
+	    thunar-volman
     ];
   }; 
+
   programs.zsh = {
     enable = true;
-    ohMyZsh = {
-      enable = true;
-      plugins = [ "git" ];
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+      };
+
+      # package.disabled = true;
     };
   };
 
@@ -110,31 +116,32 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+
     # Web Browsers
     firefox
     google-chrome
 
     # Useful terminal applications
-    vim     			# Basic text editor to fall back on
+    vim     			          # Basic text editor to fall back on
     wget
     git
-    yazi			# TUI file browser
-    zsh				# Shell
+    yazi			              # TUI file browser
+    zsh				              # Shell
     zsh-completions
-    zsh-powerlevel10k
     zsh-syntax-highlighting
-    htop			# Process manager
+    starship
+    htop			              # Process manager
     neofetch
-    nitch			# Basically neofetch
     tree
-    p7zip			# 7zip
+    p7zip			              # 7zip
     ripgrep
-    lazygit			# TUI git manager
+    lazygit			            # TUI git manager
+    lazydocker
     unzip
-    grimblast			# Screenshot tool
+    grimblast			          # Screenshot tool
     wl-clipboard
-    fzf				# Fuzzy finder
-    fd				# Find
+    fzf				              # Fuzzy finder
+    fd				              # Find
     spotify-player
 
     # Terminal
@@ -142,15 +149,15 @@
     alacritty-theme
 
     # Desktop
-    waybar			# Status bar
-    rofi-wayland		# Application launcher
-    hyprland			# Tiling window manager
-    hyprsunset			# Blue light filter
-    hyprlock			# Lock screen
-    hyprpaper			# Wallpaper manager
-    nwg-dock-hyprland		# Hyprland dock
+    waybar			            # Status bar
+    rofi-wayland		        # Application launcher
+    hyprland			          # Tiling window manager
+    hyprsunset			        # Blue light filter
+    hyprlock			          # Lock screen
+    hyprpaper			          # Wallpaper manager
+    nwg-dock-hyprland		    # Hyprland dock
     ffmpegthumbnailer
-    brightnessctl		# Handle laptop screen brightness
+    brightnessctl		        # Handle laptop screen brightness
 
     # GUI file browser
     xfce.thunar
@@ -161,12 +168,12 @@
     # Desktop applications
     spotify
     vscode
-    vesktop			# Discord application
-    zathura			# PDF reader
-    dolphin-emu			# Emulator
-    obsidian			# Note taking application
-    obs-studio			# Screen capture tool
-    vlc				# Media tool
+    vesktop			            # Discord application
+    zathura			            # PDF reader
+    dolphin-emu			        # Emulator
+    obsidian			          # Note taking application
+    obs-studio			        # Screen capture tool
+    vlc				              # Media tool
 
 
     # Programming/Dev tools
@@ -174,6 +181,7 @@
     python3
     go
     rustup
+    cargo
     nodejs_23
     gcc
     libgcc
@@ -184,7 +192,8 @@
     nerdfonts
 
     # Misc
-    lxappearance		# GTK themes and icons
+    lxappearance		        # GTK themes and icons
+    mako			              # Notification daemon
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

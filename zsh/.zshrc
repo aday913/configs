@@ -31,9 +31,20 @@ source $ZSH/oh-my-zsh.sh
 
 alias ll="ls -lta"
 alias ..="cd ../"
-alias python="python3"
+alias python="/usr/bin/python3"
+alias sudoku="nudoku"
 alias docker="sudo docker"
 alias docker-compose="sudo docker compose"
+alias codex="codex -C ./"
+# alias gemini=""  # Don't need any additional flags for now 
+
+alias pmount="sudo mount -t nfs INSERT_SERVER_DOMAIN_HERE:/export/pinas /mnt/pinas"
+alias mover="python ~/scripts/mover.py"
+
+export AVANTE_GEMINI_API_KEY=`cat ~/.geminikey`
+export AVANTE_OPENAI_API_KEY=`cat ~/.openaikey`
+
+export editor='nvim'
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
@@ -42,6 +53,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Automatically add ghub ssh key
 eval "$(ssh-agent -s)" >/dev/null 2>&1
-ssh-add ~/.ssh/INSERT_SSH_FILES_HERE >/dev/null 2>&1
+ssh-add ~/.ssh/ghub_id_ed25519 >/dev/null 2>&1
 
-
+# Enable fzf for zsh
+# source <(fzf --zsh)

@@ -10,15 +10,15 @@ return {
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"lua_ls",
+					-- "lua_ls",
 					"gopls",
 					"marksman",
 					"pyright",
 					"rust_analyzer",
 					"yamlls",
-					-- "tsserver",
+					"ts_ls",
 					-- "volar",
-					"eslint",
+					-- "eslint",
 					"bashls",
 					"dockerls",
 				},
@@ -31,9 +31,14 @@ return {
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
 			local utils = require("lspconfig/util")
-			lspconfig.lua_ls.setup({ capabilities = capabilities })
-			lspconfig.pyright.setup({ capabilities = capabilities })
-			lspconfig.gopls.setup({
+
+      -- vim.lsp.config("lua_ls", { capabilities = capabilities })
+      -- vim.lsp.enable("lua_ls")
+
+      vim.lsp.config("pyright", { capabilities = capabilities })
+      vim.lsp.enable("pyright")
+
+      vim.lsp.config("gopls", {
 				capabilities = capabilities,
 				cmd = { "gopls" },
 				filetypes = {
@@ -53,36 +58,42 @@ return {
 					},
 				},
 			})
+      vim.lsp.enable("gopls")
 
 			-- This is specifically to get vue to work:
             -- Note that you need to install vue-language-server, vue-typescript-plugin, typescript, 
             --   and vue-language-services globally to get it to work and it would help to not install these through
             --   mason but instead through npm
-			local typescript_plugin_path = "/$USER/.nvm/versions/node/v20.11.0/lib/@vue/typescript-plugin"
-			lspconfig.tsserver.setup({
-				init_options = {
-					plugins = {
-						{
-							name = "@vue/typescript-plugin",
-							location = typescript_plugin_path,
-							languages = { "vue", "javascript", "typescript" },
-						},
-					},
-				},
-				filetypes = { "vue", "typescript", "javascript", "javascriptreact", "typescriptreact" },
-				capabilities = capabilities,
-			})
-			lspconfig.volar.setup({
-				init_options = {
-					typescript = {
-						tsdk = "/$USER/.nvm/versions/node/v20.11.0/lib/node_modules/typescript/lib",
-					},
-				},
-				capabilities = capabilities,
-			})
+			-- local typescript_plugin_path = "/$USER/.nvm/versions/node/v20.11.0/lib/@vue/typescript-plugin"
+			-- lspconfig.ts_ls.setup({
+			-- 	init_options = {
+			-- 		plugins = {
+			-- 			{
+			-- 				name = "@vue/typescript-plugin",
+			-- 				location = typescript_plugin_path,
+			-- 				languages = { "vue", "javascript", "typescript" },
+			-- 			},
+			-- 		},
+			-- 	},
+			-- 	filetypes = { "vue", "typescript", "javascript", "javascriptreact", "typescriptreact" },
+			-- 	capabilities = capabilities,
+			-- })
+			-- lspconfig.volar.setup({
+			-- 	init_options = {
+			-- 		typescript = {
+			-- 			tsdk = "/$USER/.nvm/versions/node/v20.11.0/lib/node_modules/typescript/lib",
+			-- 		},
+			-- 	},
+			-- 	capabilities = capabilities,
+			-- })
+      vim.lsp.config("bashls", { capabilities = capabilities })
+      vim.lsp.enable("bashls")
 
-			lspconfig.bashls.setup({ capabilities = capabilities })
-			lspconfig.dockerls.setup({ capabilities = capabilities })
+      vim.lsp.config("dockerls", { capabilities = capabilities })
+      vim.lsp.enable("dockerls")
+
+			-- lspconfig.bashls.setup({ capabilities = capabilities })
+			-- lspconfig.dockerls.setup({ capabilities = capabilities })
 			vim.keymap.set("n", "H", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})

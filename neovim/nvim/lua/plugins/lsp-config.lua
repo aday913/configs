@@ -40,24 +40,35 @@ return {
 
       vim.lsp.config("gopls", {
 				capabilities = capabilities,
-				cmd = { "gopls" },
+				cmd = { "/home/aday/.local/share/nvim/mason/packages/gopls/gopls" },
 				filetypes = {
 					"go",
 					"gomod",
-					"gowork",
-					"gotmpl",
+          "gowork",
+          "gotmpl",
 				},
-				root_dir = utils.root_pattern("go.work", "go.mod", ".git"),
-				settings = {
-					gopls = {
-						completeUnimported = true,
-						usePlaceholders = true,
-						analyses = {
-							unusedparams = true,
-						},
-					},
-				},
+        settings = {
+            gopls = {
+                completeUnimported = true,
+                staticcheck = true,
+                analyses = { unusedparams = true },
+            },
+        },
+        root_dir = function(fname)
+          return vim.fs.root(fname, { "go.mod", ".git", "go.work" })
+        end,
 			})
+      vim.api.nvim_create_autocmd("FileType", {
+          pattern = "go",
+          callback = function(args)
+            vim.lsp.start({
+              name = "gopls",
+              cmd = { "gopls" },
+              root_dir = vim.fs.root(args.buf, { "go.mod", ".git" }),
+              capabilities = capabilities,
+            })
+          end,
+        })
       vim.lsp.enable("gopls")
 
 			-- This is specifically to get vue to work:
